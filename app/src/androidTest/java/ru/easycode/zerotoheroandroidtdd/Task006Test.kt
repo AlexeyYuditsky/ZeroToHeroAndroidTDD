@@ -23,6 +23,7 @@ class Task006Test {
     var activityScenarioRule = ActivityScenarioRule(MainActivity::class.java)
 
     @Test
+
     fun test_change_text_runtime() {
         onView(
             allOf(
