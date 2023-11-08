@@ -2,6 +2,7 @@ package ru.easycode.zerotoheroandroidtdd
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import java.lang.NumberFormatException
 
 /**
  * Please also check ui test
@@ -50,5 +51,11 @@ class CountTest {
         } catch (e: Exception) {
             assertEquals("step should be positive, but was -2", e.message)
         }
+    }
+
+    @Test(expected = NumberFormatException::class)
+    fun test_increment_pass_not_number() {
+        val count: Count = Count.Base(step = 2)
+        count.increment(number = "").toInt()
     }
 }
