@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private val count = Count.Base(2, 4)
-    private var state: UiState = UiState.Init
+    private var state: UiState = UiState.Base()
     private lateinit var textView: TextView
     private lateinit var button: Button
 

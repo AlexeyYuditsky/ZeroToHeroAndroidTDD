@@ -37,10 +37,8 @@ interface UiState : Serializable {
 
     fun apply(textView: TextView, button: Button) = Unit
 
-    object Init : UiState
-
     data class Base(
-        private val text: String
+        private val text: String = "0"
     ) : UiState {
         override fun apply(textView: TextView, button: Button) {
             textView.text = text
