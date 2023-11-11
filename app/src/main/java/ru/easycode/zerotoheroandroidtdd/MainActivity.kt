@@ -1,12 +1,13 @@
 package ru.easycode.zerotoheroandroidtdd
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
+    private val count = Count.Base(2, 4)
     private var state: UiState = UiState.Init
     private lateinit var textView: TextView
     private lateinit var button: Button
@@ -17,7 +18,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         button = findViewById(R.id.incrementButton)
 
         button.setOnClickListener {
-            val count = Count.Base(2, 4)
             state = count.increment(textView.text.toString())
             state.apply(textView, button)
         }
@@ -37,5 +37,4 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private companion object {
         const val KEY = "key"
     }
-
 }
