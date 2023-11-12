@@ -6,12 +6,12 @@ import java.io.Serializable
 
 interface UiState : Serializable {
 
-    fun apply(textView: TextView, buttonDecrement: Button, buttonIncrement: Button) = Unit
+    fun apply(textView: TextView, decrementButton: Button, incrementButton: Button) = Unit
 
     abstract class Abstract(
         private val text: String
     ) : UiState {
-        override fun apply(textView: TextView, buttonDecrement: Button, buttonIncrement: Button) {
+        override fun apply(textView: TextView, decrementButton: Button, incrementButton: Button) {
             textView.text = text
         }
     }
@@ -19,30 +19,30 @@ interface UiState : Serializable {
     data class Base(
         private val text: String
     ) : Abstract(text) {
-        override fun apply(textView: TextView, buttonDecrement: Button, buttonIncrement: Button) {
-            super.apply(textView, buttonDecrement, buttonIncrement)
-            buttonIncrement.isEnabled = true
-            buttonDecrement.isEnabled = true
+        override fun apply(textView: TextView, decrementButton: Button, incrementButton: Button) {
+            super.apply(textView, decrementButton, incrementButton)
+            incrementButton.isEnabled = true
+            decrementButton.isEnabled = true
         }
     }
 
     data class Min(
-        private val text: String = "0"
+        private val text: String
     ) : Abstract(text) {
-        override fun apply(textView: TextView, buttonDecrement: Button, buttonIncrement: Button) {
-            super.apply(textView, buttonDecrement, buttonIncrement)
-            buttonDecrement.isEnabled = false
-            buttonIncrement.isEnabled = true
+        override fun apply(textView: TextView, decrementButton: Button, incrementButton: Button) {
+            super.apply(textView, decrementButton, incrementButton)
+            decrementButton.isEnabled = false
+            incrementButton.isEnabled = true
         }
     }
 
     data class Max(
         private val text: String
     ) : Abstract(text) {
-        override fun apply(textView: TextView, buttonDecrement: Button, buttonIncrement: Button) {
-            super.apply(textView, buttonDecrement, buttonIncrement)
-            buttonIncrement.isEnabled = false
-            buttonDecrement.isEnabled = true
+        override fun apply(textView: TextView, decrementButton: Button, incrementButton: Button) {
+            super.apply(textView, decrementButton, incrementButton)
+            incrementButton.isEnabled = false
+            decrementButton.isEnabled = true
         }
     }
 }
