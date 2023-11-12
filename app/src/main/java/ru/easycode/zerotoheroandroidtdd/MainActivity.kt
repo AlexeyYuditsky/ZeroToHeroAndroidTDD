@@ -6,11 +6,19 @@ import ru.easycode.zerotoheroandroidtdd.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+    private val viewModel = MainViewModel(LiveDataWrapper.Base(), Repository.Base())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        viewModel.liveData().observe(this) { uiState ->
+            uiState.apply(binding.progressBar, binding.titleTextView, binding.actionButton)
+        }
+
+        binding.actionButton.setOnClickListener { onButtonPressed() }
     }
+
+    private fun onButtonPressed() = viewModel.load()
 }
