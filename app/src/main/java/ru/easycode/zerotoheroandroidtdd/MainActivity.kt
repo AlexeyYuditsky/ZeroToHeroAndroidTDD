@@ -13,11 +13,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        viewModel.liveData().observe(this) { uiState ->
-            uiState.apply(binding.progressBar, binding.titleTextView, binding.actionButton)
+        with(binding) {
+            actionButton.setOnClickListener { onButtonPressed() }
+            viewModel.liveData().observe(this@MainActivity) { uiState ->
+                uiState.apply(progressBar, titleTextView, actionButton)
+            }
         }
-
-        binding.actionButton.setOnClickListener { onButtonPressed() }
     }
 
     private fun onButtonPressed() = viewModel.load()

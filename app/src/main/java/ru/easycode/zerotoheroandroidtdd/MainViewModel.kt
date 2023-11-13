@@ -2,18 +2,25 @@ package ru.easycode.zerotoheroandroidtdd
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainViewModel(
     private val liveDataWrapper: LiveDataWrapper = LiveDataWrapper.Base(),
     private val repository: Repository = Repository.Base()
 ) : ViewModel() {
 
-    fun load() = viewModelScope.launch {
+    private val viewModelScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+
+    fun load() {
         liveDataWrapper.update(UiState.ShowProgress)
-        repository.load()
-        liveDataWrapper.update(UiState.ShowData)
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.load()
+            withContext(Dispatchers.Main) { liveDataWrapper.update(UiState.ShowData) }
+        }
     }
 
     fun liveData(): LiveData<UiState> = liveDataWrapper.liveData()
