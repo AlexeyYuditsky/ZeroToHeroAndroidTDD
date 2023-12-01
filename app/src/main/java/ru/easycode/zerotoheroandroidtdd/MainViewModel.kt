@@ -1,6 +1,5 @@
 package ru.easycode.zerotoheroandroidtdd
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -26,10 +25,5 @@ class MainViewModel(
     fun restore(bundleWrapper: BundleWrapper.Restore) {
         val uiState = bundleWrapper.restore()
         liveDataWrapper.update(uiState)
-    }
-
-    override fun onCleared() {
-        Log.d("MyLog", "onCleared")
-        super.onCleared()
     }
 }

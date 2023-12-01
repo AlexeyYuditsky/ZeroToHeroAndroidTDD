@@ -19,7 +19,7 @@ interface LiveDataWrapper : LiveDataProvider {
         override fun liveData(): LiveData<UiState> = liveData
 
         override fun save(bundleWrapper: BundleWrapper.Save) {
-            liveData.value?.let { bundleWrapper.save(it) }
+            liveData.value?.let { uiState -> bundleWrapper.save(uiState) }
         }
     }
 }
