@@ -3,6 +3,9 @@ package ru.easycode.zerotoheroandroidtdd
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import ru.easycode.zerotoheroandroidtdd.data.dataSource.SimpleResponse
+import ru.easycode.zerotoheroandroidtdd.data.dataSource.SimpleService
+import ru.easycode.zerotoheroandroidtdd.data.repository.Repository
 
 class RepositoryTest {
 
@@ -20,12 +23,9 @@ private interface FakeService : SimpleService {
 
     class Base : FakeService {
 
-        private val map = mutableMapOf<String, SimpleResponse>()
-
-        init {
-            map["a"] = SimpleResponse(text = "A")
-            map["b"] = SimpleResponse(text = "B")
-        }
+        private val map = mapOf(
+            "a" to SimpleResponse(text = "A")
+        )
 
         override suspend fun fetch(url: String): SimpleResponse {
             return map[url]!!

@@ -1,4 +1,4 @@
-package ru.easycode.zerotoheroandroidtdd
+package ru.easycode.zerotoheroandroidtdd.ui
 
 import androidx.annotation.MainThread
 import androidx.lifecycle.LifecycleOwner
@@ -10,6 +10,7 @@ import java.util.concurrent.atomic.AtomicBoolean
  * Please use this class in LiveDataWrapper
  */
 class SingleLiveEvent<T> : MutableLiveData<T>() {
+
     private val mPending = AtomicBoolean(false)
 
     @MainThread

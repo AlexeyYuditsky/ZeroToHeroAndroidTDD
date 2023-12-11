@@ -10,6 +10,12 @@ import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import ru.easycode.zerotoheroandroidtdd.data.dataSource.SimpleResponse
+import ru.easycode.zerotoheroandroidtdd.data.repository.Repository
+import ru.easycode.zerotoheroandroidtdd.ui.BundleWrapper
+import ru.easycode.zerotoheroandroidtdd.ui.LiveDataWrapper
+import ru.easycode.zerotoheroandroidtdd.ui.MainViewModel
+import ru.easycode.zerotoheroandroidtdd.ui.UiState
 
 /**
  * Please also check out the ui test
@@ -38,7 +44,7 @@ class MainViewModelTest {
     private lateinit var liveDataWrapper: FakeLiveDataWrapper
     private lateinit var viewModel: MainViewModel
 
-    fun initialize() {
+    private fun initialize() {
         repository = FakeRepository.Base()
         liveDataWrapper = FakeLiveDataWrapper.Base()
         viewModel = MainViewModel(
@@ -49,13 +55,14 @@ class MainViewModelTest {
 
     @Test
     fun test() {
-        repository.expectResponse(SimpleResponse(text = "testingText"))
+        val testText = "testingText"
+        repository.expectResponse(SimpleResponse(text = testText))
 
         viewModel.load()
         liveDataWrapper.checkUpdateCalls(
             listOf(
                 UiState.ShowProgress,
-                UiState.ShowData(text = "testingText")
+                UiState.ShowData(text = testText)
             )
         )
         repository.checkLoadCalledTimes(1)
@@ -69,7 +76,7 @@ class MainViewModelTest {
         initialize()
 
         viewModel.restore(bundleWrapper = bundleWrapperRestore)
-        liveDataWrapper.checkUpdateCalls(listOf(UiState.ShowData(text = "testingText")))
+        liveDataWrapper.checkUpdateCalls(listOf(UiState.ShowData(text = testText)))
         repository.checkLoadCalledTimes(0)
     }
 }
@@ -88,7 +95,7 @@ private interface FakeBundleWrapper : BundleWrapper.Mutable {
     }
 }
 
-private interface FakeLiveDataWrapper : LiveDataWrapper {
+private interface FakeLiveDataWrapper : LiveDataWrapper<UiState> {
 
     fun checkUpdateCalls(expected: List<UiState>)
 
