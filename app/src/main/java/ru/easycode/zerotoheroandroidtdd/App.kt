@@ -28,7 +28,7 @@ class App : Application() {
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build()
         return Retrofit.Builder()
-            .baseUrl("https://github.com/AlexeyYuditsky/ZeroToHeroAndroidTDD/blob/task/")
+            .baseUrl("https://raw.githubusercontent.com/AlexeyYuditsky/ZeroToHeroAndroidTDD/task/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
@@ -36,7 +36,6 @@ class App : Application() {
     }
 
     private companion object {
-        const val URL =
-            "https://raw.githubusercontent.com/AlexeyYuditsky/ZeroToHeroAndroidTDD/task/018-clouddatasource/app/sampleresponse.json"
+        const val URL = "018-clouddatasource/app/sampleresponse.json"
     }
 }

@@ -5,13 +5,13 @@ import androidx.lifecycle.MutableLiveData
 
 interface LiveDataWrapper {
 
-    interface Update : LiveDataWrapper
+    interface Update : LiveDataWrapper {
+        fun update(value: UiState)
+    }
 
     interface Mutable : Update
 
     fun save(bundleWrapper: BundleWrapper.Save)
-
-    fun update(value: UiState)
 
     fun liveData(): LiveData<UiState>
 

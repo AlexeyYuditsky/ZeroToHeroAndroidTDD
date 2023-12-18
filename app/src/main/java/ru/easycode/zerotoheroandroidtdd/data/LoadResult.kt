@@ -9,7 +9,7 @@ interface LoadResult {
     fun show(updateLiveData: LiveDataWrapper.Update)
 
     data class Success(
-        val data: SimpleResponse
+        private val data: SimpleResponse
     ) : LoadResult {
         override fun show(updateLiveData: LiveDataWrapper.Update) {
             updateLiveData.update(UiState.ShowData(data.text))
@@ -17,10 +17,18 @@ interface LoadResult {
     }
 
     data class Error(
-        val noConnection: Boolean
+        private val noConnection: Boolean
     ) : LoadResult {
         override fun show(updateLiveData: LiveDataWrapper.Update) {
-            updateLiveData.update(UiState.ShowData("No internet connection"))
+            updateLiveData.update(
+                UiState.ShowData(
+                    if (noConnection) {
+                        "No internet connection"
+                    } else {
+                        "Something went wrong"
+                    }
+                )
+            )
         }
     }
 }
