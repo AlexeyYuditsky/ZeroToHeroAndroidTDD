@@ -5,6 +5,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import ru.easycode.zerotoheroandroidtdd.databinding.ActivityMainBinding
+import ru.easycode.zerotoheroandroidtdd.databinding.TextItemBinding
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,12 +29,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        val array = binding.contentLayout.children.map { (it as TextView).text.toString() }.toArray()
+        val array =
+            binding.contentLayout.children.map { (it as TextView).text.toString() }.toArray()
         outState.putStringArray("key", array)
     }
 
-    private fun addTextView(text: CharSequence) {
-        val textView = TextView(this)
+    private fun addTextView(text: String) {
+        val textView = TextItemBinding.inflate(layoutInflater).root
         textView.text = text
         binding.contentLayout.addView(textView)
     }
