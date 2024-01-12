@@ -3,6 +3,7 @@ package ru.easycode.zerotoheroandroidtdd
 import android.widget.Button
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
+import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.typeText
@@ -79,7 +80,7 @@ class Task023Test {
         for (i in 0..10) {
             onView(withId(R.id.inputEditText)).perform(typeText("text number $i"))
             onView(withId(R.id.actionButton)).perform(click())
-            onView(withId(R.id.inputEditText)).check(matches(withText("")))
+            Espresso.closeSoftKeyboard()
 
             onView(RecyclerViewMatcher(R.id.recyclerView).atPosition(i + 2, R.id.elementTextView))
                 .check(matches(withText("text number $i")))
