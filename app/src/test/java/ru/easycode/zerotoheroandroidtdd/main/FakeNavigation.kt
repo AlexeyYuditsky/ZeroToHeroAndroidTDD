@@ -19,7 +19,7 @@ interface FakeNavigation : Navigation.Mutable {
             callsList.add(value)
         }
 
-        override fun liveData(): LiveData<Screen> {
+        override fun livedata(): LiveData<Screen> {
             throw IllegalStateException("not used")
         }
     }
