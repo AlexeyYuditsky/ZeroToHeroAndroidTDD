@@ -1,10 +1,14 @@
 package ru.easycode.zerotoheroandroidtdd.main
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
 import ru.easycode.zerotoheroandroidtdd.list.ListScreen
 
 class MainViewModel(
     private val navigation: Navigation.Mutable
-) : Navigation.Update { // todo viewmodel android
+) : ViewModel(), Navigation.Mutable {
+
+    override fun livedata(): LiveData<Screen> = navigation.livedata()
 
     override fun update(value: Screen) = navigation.update(value)
 
