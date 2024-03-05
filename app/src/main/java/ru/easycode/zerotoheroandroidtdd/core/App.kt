@@ -5,14 +5,8 @@ import androidx.lifecycle.ViewModel
 
 class App : Application(), ProvideViewModel {
 
-    private lateinit var factory: ViewModelFactory
+    private val factory = ViewModelFactory.Base(ProvideViewModel.Base())
 
-    override fun onCreate() {
-        super.onCreate()
-        factory = ViewModelFactory.Base(ProvideViewModel.Base())
-    }
-
-    override fun <T : ViewModel> viewModel(viewModelClass: Class<T>): T {
-        return factory.viewModel(viewModelClass)
-    }
+    override fun <T : ViewModel> viewModel(viewModelClass: Class<T>): T =
+        factory.viewModel(viewModelClass)
 }

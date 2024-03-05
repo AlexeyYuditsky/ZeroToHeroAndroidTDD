@@ -12,6 +12,7 @@ interface ViewModelFactory : ProvideViewModel, ClearViewModel {
 
         override fun <T : ViewModel> viewModel(viewModelClass: Class<T>): T {
             return if (viewModelMap.containsKey(viewModelClass)) {
+                @Suppress("UNCHECKED_CAST")
                 viewModelMap[viewModelClass] as T
             } else {
                 provideViewModel.viewModel(viewModelClass).also { viewModel ->

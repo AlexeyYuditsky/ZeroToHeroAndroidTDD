@@ -18,7 +18,7 @@ interface ProvideViewModel {
             @Suppress("UNCHECKED_CAST")
             return when (viewModelClass) {
                 MainViewModel::class.java -> MainViewModel(navigation)
-                ListViewModel::class.java -> ListViewModel(ListLiveDataWrapper.Base(), navigation)
+                ListViewModel::class.java -> ListViewModel(navigation, ListLiveDataWrapper.Base())
                 else -> throw IllegalArgumentException("unknown viewModel $viewModelClass")
             } as T
         }

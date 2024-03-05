@@ -19,7 +19,7 @@ interface LiveDataWrapper {
         protected val liveData: MutableLiveData<T> = SingleLiveEvent()
     ) : Mutable<T> {
 
-        override fun livedata(): LiveData<T> = livedata()
+        override fun livedata(): LiveData<T> = liveData
 
         override fun update(value: T) {
             liveData.value = value
