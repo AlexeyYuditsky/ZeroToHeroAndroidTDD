@@ -15,9 +15,9 @@ interface ViewModelFactory : ProvideViewModel, ClearViewModel {
                 @Suppress("UNCHECKED_CAST")
                 viewModelMap[viewModelClass] as T
             } else {
-                provideViewModel.viewModel(viewModelClass).also { viewModel ->
-                    viewModelMap[viewModelClass] = viewModel
-                }
+                val viewModel = provideViewModel.viewModel(viewModelClass)
+                viewModelMap[viewModelClass] = viewModel
+                return viewModel
             }
         }
 
