@@ -22,5 +22,7 @@ interface ProvideViewModel {
                 else -> throw IllegalArgumentException("unknown viewModel $viewModelClass")
             } as T
         }
+
     }
+
 }

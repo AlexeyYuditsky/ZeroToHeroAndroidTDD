@@ -15,4 +15,5 @@ class MainViewModel(
     fun init(firstRun: Boolean) {
         if (firstRun) navigation.update(ListScreen)
     }
+
 }

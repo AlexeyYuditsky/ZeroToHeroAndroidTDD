@@ -16,4 +16,5 @@ class TextAdapter : ListAdapter<CharSequence, TextViewHolder>(DiffUtilItemCallba
         val text = currentList[position]
         holder.bind(text)
     }
+
 }

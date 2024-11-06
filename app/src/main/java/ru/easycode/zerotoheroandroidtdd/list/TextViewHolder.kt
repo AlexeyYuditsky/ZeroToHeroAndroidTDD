@@ -10,4 +10,5 @@ class TextViewHolder(
     fun bind(text: CharSequence) = with(binding) {
         elementTextView.text = text.toString()
     }
+
 }

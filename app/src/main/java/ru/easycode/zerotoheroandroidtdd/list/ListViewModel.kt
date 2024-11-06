@@ -13,4 +13,5 @@ class ListViewModel(
     override fun livedata(): LiveData<List<CharSequence>> = liveDataWrapper.livedata()
 
     fun create() = navigation.update(CreateScreen)
+
 }

@@ -24,4 +24,5 @@ abstract class AbstractFragment<B : ViewBinding>(@LayoutRes id: Int) : Fragment(
         super.onDestroyView()
         _binding = null
     }
+
 }

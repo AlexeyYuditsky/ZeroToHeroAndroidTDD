@@ -22,5 +22,7 @@ interface FakeNavigation : Navigation.Mutable {
         override fun livedata(): LiveData<Screen> {
             throw IllegalStateException("not used")
         }
+
     }
+
 }

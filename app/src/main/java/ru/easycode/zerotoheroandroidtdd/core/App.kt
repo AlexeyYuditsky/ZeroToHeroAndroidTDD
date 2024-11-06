@@ -7,6 +7,8 @@ class App : Application(), ProvideViewModel {
 
     private val factory = ViewModelFactory.Base(ProvideViewModel.Base())
 
-    override fun <T : ViewModel> viewModel(viewModelClass: Class<T>): T =
-        factory.viewModel(viewModelClass)
+    override fun <T : ViewModel> viewModel(viewModelClass: Class<T>): T {
+        return factory.viewModel(viewModelClass)
+    }
+
 }

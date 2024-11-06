@@ -25,4 +25,5 @@ interface LiveDataWrapper {
             liveData.value = value
         }
     }
+
 }

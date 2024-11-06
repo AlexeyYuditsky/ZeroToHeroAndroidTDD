@@ -9,9 +9,9 @@ import ru.easycode.zerotoheroandroidtdd.databinding.FragmentListBinding
 
 class ListFragment : AbstractFragment<FragmentListBinding>(R.layout.fragment_list) {
 
-    override fun bind(view: View): FragmentListBinding = FragmentListBinding.bind(view)
-
     private val viewModel by lazy { (activity as ProvideViewModel).viewModel(ListViewModel::class.java) }
+
+    override fun bind(view: View): FragmentListBinding = FragmentListBinding.bind(view)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -19,4 +19,5 @@ class ListFragment : AbstractFragment<FragmentListBinding>(R.layout.fragment_lis
     }
 
     private fun onAddButtonPressed() = viewModel.create()
+
 }

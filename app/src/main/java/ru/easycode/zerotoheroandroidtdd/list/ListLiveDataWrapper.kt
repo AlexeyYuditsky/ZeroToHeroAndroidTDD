@@ -29,5 +29,7 @@ interface ListLiveDataWrapper {
             val currentList = liveData.value?.plus(source) ?: return
             update(currentList)
         }
+
     }
+
 }
