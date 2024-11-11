@@ -9,9 +9,7 @@ import ru.easycode.zerotoheroandroidtdd.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity(), ProvideViewModel {
 
     private val viewModel by lazy(LazyThreadSafetyMode.NONE) { viewModel(MainViewModel::class.java) }
-    private val binding by lazy(LazyThreadSafetyMode.NONE) {
-        ActivityMainBinding.inflate(layoutInflater)
-    }
+    private val binding by lazy(LazyThreadSafetyMode.NONE) { ActivityMainBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
