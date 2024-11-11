@@ -1,35 +1,19 @@
 package ru.easycode.zerotoheroandroidtdd.list
 
-import org.junit.Before
+import org.junit.Assert.assertEquals
 import org.junit.Test
 import ru.easycode.zerotoheroandroidtdd.create.CreateScreen
 import ru.easycode.zerotoheroandroidtdd.main.FakeNavigation
-import ru.easycode.zerotoheroandroidtdd.main.Navigation
 
-class ListViewModelTest {
-
-    private lateinit var viewModel: ListViewModel
-    private lateinit var navigation: FakeNavigation
-    private lateinit var liveDataWrapper: FakeListLiveDataWrapper
-
-    @Before
-    fun setup() {
-        liveDataWrapper = FakeListLiveDataWrapper.Base()
-        val mutableLiveDataWrapper: ListLiveDataWrapper.Mutable = liveDataWrapper
-
-        navigation = FakeNavigation.Base()
-        val navigationUpdate: Navigation.Update = navigation
-
-        viewModel = ListViewModel(
-            liveDataWrapper = mutableLiveDataWrapper,
-            navigation = navigationUpdate
-        )
-    }
+class ListViewModelTest : AbstractListViewModelTest() {
 
     @Test
     fun test_navigation() {
         viewModel.create()
-        navigation.checkUpdateCalled(listOf(CreateScreen))
+
+        val expected = listOf(CreateScreen)
+        val actual = navigation.fetchCreatedScreens()
+        assertEquals(expected, actual)
     }
 
     @Test
@@ -39,26 +23,20 @@ class ListViewModelTest {
         val save: BundleWrapper.Save = bundleWrapper
         val restore: BundleWrapper.Restore = bundleWrapper
 
-       // viewModel.save(bundleWrapper = save)
+        // viewModel.save(bundleWrapper = save)
 
-        setup()
+        val navigation = FakeNavigation.Base()
+        val liveDataWrapper = FakeListLiveDataWrapper.Base()
+        val viewModel = ListViewModel(
+            navigation = navigation,
+            liveDataWrapper = liveDataWrapper
+        )
 
        // viewModel.restore(bundleWrapper = restore)
-        liveDataWrapper.checkCalledList(listOf("1", "2", "3"))
+
+        val expected = listOf("1", "2", "3")
+        val actual = liveDataWrapper.fetchDataList()
+        assertEquals(expected, actual)
     }
-}
 
-private interface FakeBundleWrapper : BundleWrapper.Mutable {
-
-    class Base : FakeBundleWrapper {
-        private val cached = ArrayList<CharSequence>()
-
-        override fun save(list: ArrayList<CharSequence>) {
-            cached.addAll(list)
-        }
-
-        override fun restore(): List<CharSequence> {
-            return cached
-        }
-    }
 }
