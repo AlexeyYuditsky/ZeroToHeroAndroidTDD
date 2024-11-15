@@ -16,7 +16,7 @@ abstract class AbstractViewModelFactoryTest {
 
         class Base : FakeProvideViewModel {
 
-            val viewModelList = mutableListOf<Class<out ViewModel>>()
+            private val viewModelList = mutableListOf<Class<out ViewModel>>()
 
             override fun fetchCreatedViewModels(): List<Class<out ViewModel>> = viewModelList
 
