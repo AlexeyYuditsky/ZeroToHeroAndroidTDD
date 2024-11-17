@@ -23,7 +23,7 @@ class ListViewModelTest : AbstractListViewModelTest() {
         val save: BundleWrapper.Save = bundleWrapper
         val restore: BundleWrapper.Restore = bundleWrapper
 
-        // viewModel.save(bundleWrapper = save)
+        viewModel.save(bundleWrapper = save)
 
         val navigation = FakeNavigation.Base()
         val liveDataWrapper = FakeListLiveDataWrapper.Base()
@@ -32,7 +32,7 @@ class ListViewModelTest : AbstractListViewModelTest() {
             liveDataWrapper = liveDataWrapper
         )
 
-       // viewModel.restore(bundleWrapper = restore)
+       viewModel.restore(bundleWrapper = restore)
 
         val expected = listOf("1", "2", "3")
         val actual = liveDataWrapper.fetchDataList()
