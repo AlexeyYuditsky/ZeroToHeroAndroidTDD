@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity(), ProvideViewModel {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        setNavigationBarPadding()
+        setInsets()
         viewModel.init(savedInstanceState == null)
 
         viewModel.livedata().observe(this) { screen ->
@@ -31,10 +31,12 @@ class MainActivity : AppCompatActivity(), ProvideViewModel {
         return (application as ProvideViewModel).viewModel(viewModelClass)
     }
 
-    private fun setNavigationBarPadding() {
+    private fun setInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
             val systemBarsInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            val statusBarInsets = insets.getInsets(WindowInsetsCompat.Type.statusBars())
             view.updatePadding(
+                top = statusBarInsets.top,
                 right = systemBarsInsets.right,
                 bottom = systemBarsInsets.bottom
             )

@@ -1,4 +1,3 @@
-/*
 package ru.easycode.zerotoheroandroidtdd.create
 
 import androidx.lifecycle.ViewModel
@@ -6,8 +5,8 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import ru.easycode.zerotoheroandroidtdd.core.ClearViewModel
-import ru.easycode.zerotoheroandroidtdd.list.FakeListLiveDataWrapper
 import ru.easycode.zerotoheroandroidtdd.list.ListLiveDataWrapper
+import ru.easycode.zerotoheroandroidtdd.main.FakeListLiveDataWrapper
 import ru.easycode.zerotoheroandroidtdd.main.FakeNavigation
 import ru.easycode.zerotoheroandroidtdd.main.Navigation
 import ru.easycode.zerotoheroandroidtdd.main.Screen
@@ -38,32 +37,49 @@ class CreateViewModelTest {
     @Test
     fun test_add() {
         viewModel.add(text = "exampleText")
-        addLiveDataWrapper.checkCalledList(listOf("exampleText"))
-        navigation.checkUpdateCalled(listOf(Screen.Pop))
-        clearViewModel.checkClearCalled(CreateViewModel::class.java)
+
+        val actualLiveData = addLiveDataWrapper.fetchDataList()
+        val expectedLiveData = listOf("exampleText")
+        assertEquals(expectedLiveData, actualLiveData)
+
+        val actualNavigation = navigation.fetchCreatedScreens()
+        val expectedNavigation = listOf(Screen.Pop)
+        assertEquals(expectedNavigation, actualNavigation)
+
+        val actualClear = clearViewModel.fetchClearViewModel()
+        val expectedClear = CreateViewModel::class.java
+        assertEquals(expectedClear, actualClear)
     }
 
     @Test
     fun test_comeback() {
         viewModel.comeback()
-        navigation.checkUpdateCalled(listOf(Screen.Pop))
-        clearViewModel.checkClearCalled(CreateViewModel::class.java)
+
+        val actualNavigation = navigation.fetchCreatedScreens()
+        val expectedNavigation = listOf(Screen.Pop)
+        assertEquals(expectedNavigation, actualNavigation)
+
+        val actualClear = clearViewModel.fetchClearViewModel()
+        val expectedClear = CreateViewModel::class.java
+        assertEquals(expectedClear, actualClear)
     }
+
 }
 
 private interface FakeClearViewModel : ClearViewModel {
 
-    fun checkClearCalled(expected: Class<out ViewModel>)
+    fun fetchClearViewModel(): Class<out ViewModel>
 
     class Base : FakeClearViewModel {
+
         private lateinit var actual: Class<out ViewModel>
 
         override fun clear(viewModelClass: Class<out ViewModel>) {
             actual = viewModelClass
         }
 
-        override fun checkClearCalled(expected: Class<out ViewModel>) {
-            assertEquals(expected, actual)
-        }
+        override fun fetchClearViewModel(): Class<out ViewModel> = actual
+
     }
-}*/
+
+}

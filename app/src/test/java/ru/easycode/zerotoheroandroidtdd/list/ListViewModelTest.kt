@@ -3,6 +3,8 @@ package ru.easycode.zerotoheroandroidtdd.list
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import ru.easycode.zerotoheroandroidtdd.create.CreateScreen
+import ru.easycode.zerotoheroandroidtdd.main.FakeBundleWrapper
+import ru.easycode.zerotoheroandroidtdd.main.FakeListLiveDataWrapper
 import ru.easycode.zerotoheroandroidtdd.main.FakeNavigation
 
 class ListViewModelTest : AbstractListViewModelTest() {

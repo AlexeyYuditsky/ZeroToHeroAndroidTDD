@@ -26,7 +26,7 @@ interface ListLiveDataWrapper {
         }
 
         override fun add(source: CharSequence) {
-            val currentList = liveData.value?.plus(source) ?: return
+            val currentList = liveData.value?.plus(source) ?: listOf(source)
             update(currentList)
         }
 

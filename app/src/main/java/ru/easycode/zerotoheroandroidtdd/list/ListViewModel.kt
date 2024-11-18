@@ -7,7 +7,7 @@ import ru.easycode.zerotoheroandroidtdd.main.Navigation
 
 class ListViewModel(
     private val navigation: Navigation.Update,
-    private val liveDataWrapper: ListLiveDataWrapper.Mutable
+    private val liveDataWrapper: ListLiveDataWrapper.All
 ) : ViewModel(), ListLiveDataWrapper.Read {
 
     override fun livedata(): LiveData<List<CharSequence>> = liveDataWrapper.livedata()
@@ -18,6 +18,10 @@ class ListViewModel(
 
     fun restore(bundleWrapper: BundleWrapper.Restore) {
         liveDataWrapper.update(bundleWrapper.restore())
+    }
+
+    fun add(text: CharSequence) {
+        liveDataWrapper.add(text)
     }
 
 }
