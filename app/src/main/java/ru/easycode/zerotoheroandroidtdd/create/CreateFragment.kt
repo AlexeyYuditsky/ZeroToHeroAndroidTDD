@@ -1,6 +1,5 @@
 package ru.easycode.zerotoheroandroidtdd.create
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.activity.addCallback
@@ -16,13 +15,12 @@ class CreateFragment : AbstractFragment<FragmentCreateBinding>(R.layout.fragment
 
     override fun bind(view: View) = FragmentCreateBinding.bind(view)
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        requireActivity().onBackPressedDispatcher.addCallback { viewModel.comeback() }
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            viewModel.comeback()
+        }
 
         binding.inputEditText.addTextChangedListener { text ->
             binding.createButton.isEnabled = text.toString().length >= 3
