@@ -17,17 +17,19 @@ class CreateFragment : AbstractFragment<FragmentCreateBinding>(R.layout.fragment
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        with(binding) {
+            requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+                viewModel.comeback()
+            }
 
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            viewModel.comeback()
-        }
+            inputEditText.addTextChangedListener { text ->
+                createButton.isEnabled = text.toString().length >= 3
+            }
 
-        binding.inputEditText.addTextChangedListener { text ->
-            binding.createButton.isEnabled = text.toString().length >= 3
-        }
-
-        binding.createButton.setOnClickListener {
-            viewModel.add(binding.inputEditText.text.toString())
+            createButton.setOnClickListener {
+                hideKeyboard()
+                viewModel.add(inputEditText.text.toString())
+            }
         }
     }
 

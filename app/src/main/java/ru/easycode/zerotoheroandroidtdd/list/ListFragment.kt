@@ -5,6 +5,7 @@ import android.view.View
 import ru.easycode.zerotoheroandroidtdd.R
 import ru.easycode.zerotoheroandroidtdd.core.AbstractFragment
 import ru.easycode.zerotoheroandroidtdd.core.ProvideViewModel
+import ru.easycode.zerotoheroandroidtdd.core.log
 import ru.easycode.zerotoheroandroidtdd.databinding.FragmentListBinding
 
 class ListFragment : AbstractFragment<FragmentListBinding>(R.layout.fragment_list) {
@@ -31,8 +32,7 @@ class ListFragment : AbstractFragment<FragmentListBinding>(R.layout.fragment_lis
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        val bundleWrapper = BundleWrapper.Base(outState)
-        viewModel.save(bundleWrapper)
+        viewModel.save(BundleWrapper.Base(outState))
     }
 
     private fun onAddButtonPressed() = viewModel.create()
