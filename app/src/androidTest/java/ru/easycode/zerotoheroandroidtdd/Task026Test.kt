@@ -2,10 +2,10 @@ package ru.easycode.zerotoheroandroidtdd
 
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import ru.easycode.zerotoheroandroidtdd.main.MainActivity
 
 @RunWith(AndroidJUnit4::class)
 class Task026Test {
@@ -15,9 +15,9 @@ class Task026Test {
 
     @Test
     fun test_add() {
-        val mainPage = MainPage()
-        mainPage.checkVisibleNow()
-        mainPage.clickAddButton()
+        val listPage = ListPage()
+        listPage.checkVisibleNow()
+        listPage.clickAddButton()
 
         val addPage = AddPage()
         addPage.checkVisibleNow()
@@ -25,18 +25,18 @@ class Task026Test {
         addPage.clickSaveButton()
         addPage.checkNotVisibleNow()
 
-        mainPage.checkItem(position = 0, text = "first item in the list")
+        listPage.checkItem(position = 0, text = "first item in the list")
 
-        mainPage.clickAddButton()
+        listPage.clickAddButton()
         addPage.checkVisibleNow()
         addPage.inputText("second item in the list")
         addPage.clickSaveButton()
         addPage.checkNotVisibleNow()
-        mainPage.checkItem(position = 1, text = "second item in the list")
+        listPage.checkItem(position = 1, text = "second item in the list")
 
         activityScenarioRule.scenario.recreate()
 
-        mainPage.checkItem(position = 0, text = "first item in the list")
-        mainPage.checkItem(position = 1, text = "second item in the list")
+        listPage.checkItem(position = 0, text = "first item in the list")
+        listPage.checkItem(position = 1, text = "second item in the list")
     }
 }

@@ -4,17 +4,23 @@ import androidx.lifecycle.LiveData
 import kotlinx.coroutines.Dispatchers
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import ru.easycode.zerotoheroandroidtdd.core.Repository
+import ru.easycode.zerotoheroandroidtdd.core.ListLiveDataWrapper
+import ru.easycode.zerotoheroandroidtdd.list.ListViewModel
+import ru.easycode.zerotoheroandroidtdd.main.Navigation
 
-class MainViewModelTest {
+class ListViewModelTest {
 
     @Test
     fun test() {
         val repository = FakeRepository.Base()
         val liveDataWrapper = FakeListLiveDataWrapper.Base()
-        val viewModel = MainViewModel(
-            repository = repository, liveDataWrapper = liveDataWrapper,
+        val navigation = Navigation.Base()
+        val viewModel = ListViewModel(
+            repository = repository,
+            liveDataWrapper = liveDataWrapper,
+            navigation = navigation,
             dispatcher = Dispatchers.Unconfined,
-            dispatcherMain = Dispatchers.Unconfined
         )
 
         repository.expectList(listOf("1", "2"))
@@ -41,7 +47,7 @@ private interface FakeListLiveDataWrapper : ListLiveDataWrapper.Mutable {
             actual.addAll(value)
         }
 
-        override fun liveData(): LiveData<List<String>> {
+        override fun livedata(): LiveData<List<String>> {
             throw IllegalStateException("not used")
         }
     }

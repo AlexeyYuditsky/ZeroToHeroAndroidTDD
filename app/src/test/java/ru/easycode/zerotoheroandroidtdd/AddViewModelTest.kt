@@ -4,6 +4,10 @@ import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.Dispatchers
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import ru.easycode.zerotoheroandroidtdd.add.AddViewModel
+import ru.easycode.zerotoheroandroidtdd.core.ClearViewModel
+import ru.easycode.zerotoheroandroidtdd.core.Repository
+import ru.easycode.zerotoheroandroidtdd.core.ListLiveDataWrapper
 
 class AddViewModelTest {
 
@@ -13,14 +17,15 @@ class AddViewModelTest {
         val repository = FakeAddRepository.Base(order)
         val liveDataWrapper = FakeAddLiveDataWrapper.Base(order)
         val clear = FakeClearViewModel.Base(order)
-        val viewModel =
-            AddViewModel(
-                repository = repository,
-                liveDataWrapper = liveDataWrapper,
-                clear = clear,
-                dispatcher = Dispatchers.Unconfined,
-                dispatcherMain = Dispatchers.Unconfined
-            )
+        val navigation = FakeNavigation.Base()
+        val viewModel = AddViewModel(
+            repository = repository,
+            liveDataWrapper = liveDataWrapper,
+            clear = clear,
+            navigation = navigation,
+            dispatcher = Dispatchers.Unconfined,
+            dispatcherMain = Dispatchers.Unconfined
+        )
 
         viewModel.add(value = "new text input")
 
@@ -37,19 +42,18 @@ class AddViewModelTest {
         val repository = FakeAddRepository.Base(order)
         val liveDataWrapper = FakeAddLiveDataWrapper.Base(order)
         val clear = FakeClearViewModel.Base(order)
-        val viewModel =
-            AddViewModel(
-                repository = repository,
-                liveDataWrapper = liveDataWrapper,
-                clear = clear,
-                dispatcher = Dispatchers.Unconfined,
-                dispatcherMain = Dispatchers.Unconfined
-            )
+        val navigation = FakeNavigation.Base()
+        val viewModel = AddViewModel(
+            repository = repository,
+            liveDataWrapper = liveDataWrapper,
+            navigation = navigation,
+            clear = clear,
+            dispatcher = Dispatchers.Unconfined,
+        )
 
         viewModel.comeback()
 
         clear.checkClearCalled(AddViewModel::class.java)
-
         order.checkCallsList(listOf(CLEAR))
     }
 }
