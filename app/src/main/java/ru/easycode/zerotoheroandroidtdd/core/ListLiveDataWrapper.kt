@@ -27,7 +27,9 @@ interface ListLiveDataWrapper {
 
         override fun livedata(): LiveData<List<String>> = liveData
 
-        override fun update(value: List<String>) = liveData.postValue(value)
+        override fun update(value: List<String>) {
+            liveData.value = value
+        }
 
         override fun add(value: String) {
             val currentList = liveData.value?.plus(value) ?: listOf(value)

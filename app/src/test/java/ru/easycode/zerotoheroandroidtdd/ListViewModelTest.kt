@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import kotlinx.coroutines.Dispatchers
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import ru.easycode.zerotoheroandroidtdd.core.Repository
 import ru.easycode.zerotoheroandroidtdd.core.ListLiveDataWrapper
+import ru.easycode.zerotoheroandroidtdd.core.Repository
 import ru.easycode.zerotoheroandroidtdd.list.ListViewModel
 import ru.easycode.zerotoheroandroidtdd.main.Navigation
 
@@ -20,7 +20,8 @@ class ListViewModelTest {
             repository = repository,
             liveDataWrapper = liveDataWrapper,
             navigation = navigation,
-            dispatcher = Dispatchers.Unconfined,
+            dispatcherIO = Dispatchers.Unconfined,
+            dispatcherMain = Dispatchers.Unconfined,
         )
 
         repository.expectList(listOf("1", "2"))
