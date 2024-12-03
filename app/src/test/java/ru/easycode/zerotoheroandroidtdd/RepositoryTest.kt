@@ -3,6 +3,11 @@ package ru.easycode.zerotoheroandroidtdd
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import ru.easycode.zerotoheroandroidtdd.core.ItemsDao
+import ru.easycode.zerotoheroandroidtdd.core.Now
+import ru.easycode.zerotoheroandroidtdd.core.Repository
+import ru.easycode.zerotoheroandroidtdd.core.model.Item
+import ru.easycode.zerotoheroandroidtdd.core.model.ItemCache
 
 class RepositoryTest {
 

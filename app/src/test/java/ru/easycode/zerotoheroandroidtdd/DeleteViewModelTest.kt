@@ -1,55 +1,55 @@
 package ru.easycode.zerotoheroandroidtdd
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import kotlinx.coroutines.Dispatchers
 import org.junit.Assert.assertEquals
-import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import ru.easycode.zerotoheroandroidtdd.FakeClearViewModel.Companion.CLEAR
-import ru.easycode.zerotoheroandroidtdd.FakeListLiveDataWrapper.Companion.LIVE_DATA_DELETE
+import ru.easycode.zerotoheroandroidtdd.FakeItemListLiveDataWrapper.Companion.LIVE_DATA_DELETE
 import ru.easycode.zerotoheroandroidtdd.FakeRepositoryDelete.Companion.REPOSITORY_DELETE
+import ru.easycode.zerotoheroandroidtdd.core.Repository
+import ru.easycode.zerotoheroandroidtdd.core.model.Item
+import ru.easycode.zerotoheroandroidtdd.core.model.ItemUi
+import ru.easycode.zerotoheroandroidtdd.core.navigation.Navigation
+import ru.easycode.zerotoheroandroidtdd.delete.DeleteViewModel
 
 class DeleteViewModelTest {
 
-    @get:Rule
-    val rule = InstantTaskExecutorRule()
-
-    private lateinit var order: Order
-    private lateinit var liveDataWrapper: FakeListLiveDataWrapper
-    private lateinit var repository: FakeRepositoryDelete
-    private lateinit var clear: FakeClearViewModel
-    private lateinit var viewModel: DeleteViewModel
-
-    @Before
-    fun setup() {
-        order = Order()
-        liveDataWrapper = FakeListLiveDataWrapper.Base(order)
-        repository = FakeRepositoryDelete.Base(order)
-        clear = FakeClearViewModel.Base(order)
-        viewModel = DeleteViewModel(
-            deleteLiveDataWrapper = liveDataWrapper,
-            repository = repository,
-            clear = clear,
-            dispatcher = Dispatchers.Unconfined,
-            dispatcherMain = Dispatchers.Unconfined
-        )
-    }
+    private val order = Order()
+    private val itemListLiveDataWrapper = FakeItemListLiveDataWrapper.Base(order)
+    private val itemTextLiveDataWrapper = FakeItemTextLiveDataWrapper.Base(order)
+    private val repository = FakeRepositoryDelete.Base(order)
+    private val clear = FakeClearViewModel.Base(order)
+    private val navigation = Navigation.Base()
+    private val viewModel = DeleteViewModel(
+        itemListLiveDataWrapper = itemListLiveDataWrapper,
+        itemTextLiveDataWrapper = itemTextLiveDataWrapper,
+        repository = repository,
+        clear = clear,
+        navigation = navigation,
+        dispatcherIO = Dispatchers.Unconfined,
+        dispatcherMain = Dispatchers.Unconfined
+    )
 
     @Test
     fun test_init() {
         viewModel.init(itemId = 5L)
-        assertEquals("5", viewModel.liveData.value)
+
+        itemTextLiveDataWrapper.checkUpdateCalled("5")
     }
 
     @Test
     fun test_delete() {
-        liveDataWrapper.update(listOf(ItemUi(id = 8L, text = "8"), ItemUi(id = 9L, text = "any")))
+        itemListLiveDataWrapper.update(
+            listOf(
+                ItemUi(id = 8L, text = "8"),
+                ItemUi(id = 9L, text = "any")
+            )
+        )
         viewModel.init(itemId = 8L)
-
         viewModel.delete(itemId = 8L)
+
         repository.checkDeleteCalled(8L)
-        liveDataWrapper.checkUpdateCallList(listOf(ItemUi(id = 9L, text = "any")))
+        itemListLiveDataWrapper.checkUpdateCallList(listOf(ItemUi(id = 9L, text = "any")))
         clear.checkClearCalled(DeleteViewModel::class.java)
         order.checkCallsList(listOf(REPOSITORY_DELETE, LIVE_DATA_DELETE, CLEAR))
     }
@@ -69,7 +69,9 @@ private interface FakeRepositoryDelete : Repository.Delete {
 
     fun checkDeleteCalled(id: Long)
 
-    class Base(private val order: Order = Order()) : FakeRepositoryDelete {
+    class Base(
+        private val order: Order
+    ) : FakeRepositoryDelete {
 
         private var actualId: Long = Long.MIN_VALUE
 

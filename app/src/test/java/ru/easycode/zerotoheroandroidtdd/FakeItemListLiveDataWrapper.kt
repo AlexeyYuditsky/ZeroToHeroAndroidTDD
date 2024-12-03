@@ -2,16 +2,18 @@ package ru.easycode.zerotoheroandroidtdd
 
 import androidx.lifecycle.LiveData
 import org.junit.Assert.assertEquals
+import ru.easycode.zerotoheroandroidtdd.core.ItemListLiveDataWrapper
+import ru.easycode.zerotoheroandroidtdd.core.model.ItemUi
 
-interface FakeListLiveDataWrapper : ListLiveDataWrapper.All {
+interface FakeItemListLiveDataWrapper : ItemListLiveDataWrapper.All {
 
     companion object {
-        const val LIVE_DATA_DELETE = "ListLiveDataWrapper#delete"
+        const val LIVE_DATA_DELETE = "ItemListLiveDataWrapper#delete"
     }
 
     fun checkUpdateCallList(expected: List<ItemUi>)
 
-    class Base(private val order: Order = Order()) : FakeListLiveDataWrapper {
+    class Base(private val order: Order = Order()) : FakeItemListLiveDataWrapper {
 
         private val actual = mutableListOf<ItemUi>()
 
@@ -28,8 +30,8 @@ interface FakeListLiveDataWrapper : ListLiveDataWrapper.All {
             throw IllegalStateException("not used")
         }
 
-        override fun add(value: ItemUi) {
-            actual.add(value)
+        override fun add(item: ItemUi) {
+            actual.add(item)
         }
 
         override fun delete(item: ItemUi) {
