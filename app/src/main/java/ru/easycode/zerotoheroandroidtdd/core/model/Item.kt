@@ -1,6 +1,6 @@
 package ru.easycode.zerotoheroandroidtdd.core.model
 
-class Item(
+data class Item(
     val id: Long,
     val text: String
 )

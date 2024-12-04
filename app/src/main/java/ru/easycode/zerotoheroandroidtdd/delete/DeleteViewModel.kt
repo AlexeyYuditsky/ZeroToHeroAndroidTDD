@@ -23,17 +23,17 @@ class DeleteViewModel(
     private val clear: ClearViewModel,
     private val dispatcherIO: CoroutineDispatcher = Dispatchers.IO,
     private val dispatcherMain: CoroutineDispatcher = Dispatchers.Main
-) : ViewModel(), ItemTextLiveDataWrapper.Read {
+) : ViewModel() {
 
     private val viewModelScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
-    override fun liveData(): LiveData<String> = itemTextLiveDataWrapper.liveData()
+    fun liveData(): LiveData<String> = itemTextLiveDataWrapper.liveData()
 
     fun init(itemId: Long) {
         viewModelScope.launch(dispatcherIO) {
-            val itemText = repository.item(itemId).text
+            val item = repository.item(itemId)
             withContext(dispatcherMain) {
-                itemTextLiveDataWrapper.update(itemText)
+                itemTextLiveDataWrapper.update(item.text)
             }
         }
     }
@@ -42,7 +42,7 @@ class DeleteViewModel(
         viewModelScope.launch(dispatcherIO) {
             repository.delete(itemId)
             withContext(dispatcherMain) {
-                val text = itemTextLiveDataWrapper.liveData().value ?: ""
+                val text = itemTextLiveDataWrapper.liveDataValue()
                 val itemUi = ItemUi(id = itemId, text = text)
                 itemListLiveDataWrapper.delete(itemUi)
                 comeback()

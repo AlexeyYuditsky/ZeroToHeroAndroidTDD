@@ -15,4 +15,5 @@ data class ItemUi(
     fun show(textView: TextView) {
         textView.text = text
     }
+
 }

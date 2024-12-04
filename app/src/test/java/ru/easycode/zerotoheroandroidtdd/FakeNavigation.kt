@@ -1,25 +1,30 @@
 package ru.easycode.zerotoheroandroidtdd
 
-import androidx.lifecycle.LiveData
+import org.junit.Assert.assertEquals
 import ru.easycode.zerotoheroandroidtdd.core.navigation.Navigation
 import ru.easycode.zerotoheroandroidtdd.core.navigation.Screen
 
-interface FakeNavigation : Navigation.Mutable {
+interface FakeNavigation : Navigation.Update {
 
-    fun fetchCreatedScreens(): List<Screen>
+    companion object {
+        const val NAVIGATION_UPDATE = "navigation#update"
+    }
+
+    fun checkUpdateCalled(expectedScreen: Screen)
 
     class Base(
         private val order: Order
     ) : FakeNavigation {
 
-        private val createdScreenList = mutableListOf<Screen>()
+        private lateinit var screen: Screen
 
-        override fun fetchCreatedScreens() = createdScreenList
-
-        override fun liveData(): LiveData<Screen> = throw IllegalStateException("not used")
+        override fun checkUpdateCalled(expectedScreen: Screen) {
+            assertEquals(screen, expectedScreen)
+        }
 
         override fun update(value: Screen) {
-            createdScreenList.add(value)
+            order.add(NAVIGATION_UPDATE)
+            screen = value
         }
 
     }

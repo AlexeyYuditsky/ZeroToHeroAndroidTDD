@@ -8,7 +8,7 @@ import ru.easycode.zerotoheroandroidtdd.core.model.ItemUi
 interface FakeItemListLiveDataWrapper : ItemListLiveDataWrapper.All {
 
     companion object {
-        const val LIVE_DATA_DELETE = "ItemListLiveDataWrapper#delete"
+        const val LIVEDATA_DELETE = "ItemListLiveDataWrapper#delete"
     }
 
     fun checkUpdateCallList(expected: List<ItemUi>)
@@ -35,7 +35,7 @@ interface FakeItemListLiveDataWrapper : ItemListLiveDataWrapper.All {
         }
 
         override fun delete(item: ItemUi) {
-            order.add(LIVE_DATA_DELETE)
+            order.add(LIVEDATA_DELETE)
             actual.remove(item)
         }
     }

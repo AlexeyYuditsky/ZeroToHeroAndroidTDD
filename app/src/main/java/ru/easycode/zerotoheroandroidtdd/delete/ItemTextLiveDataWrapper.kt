@@ -8,8 +8,16 @@ interface ItemTextLiveDataWrapper {
 
     interface Update : LiveDataWrapper.Update<String>
 
-    interface Mutable : Read, Update
+    interface Value {
+        fun liveDataValue(): String
+    }
 
-    class Base : LiveDataWrapper.Abstract<String>(), Mutable
+    interface Mutable : Read, Update, Value
+
+    class Base : LiveDataWrapper.Abstract<String>(), Mutable {
+
+        override fun liveDataValue(): String = liveData.value!!
+
+    }
 
 }

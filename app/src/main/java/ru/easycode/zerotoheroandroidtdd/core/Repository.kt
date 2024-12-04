@@ -9,16 +9,16 @@ interface Repository {
         fun item(id: Long): Item
     }
 
-    interface Add {
-        fun add(value: String): Long
+    interface DeleteItem {
+        fun delete(id: Long)
     }
 
     interface Read {
         fun list(): List<Item>
     }
 
-    interface DeleteItem {
-        fun delete(id: Long)
+    interface Add {
+        fun add(value: String): Long
     }
 
     interface Mutable : Read, Add
