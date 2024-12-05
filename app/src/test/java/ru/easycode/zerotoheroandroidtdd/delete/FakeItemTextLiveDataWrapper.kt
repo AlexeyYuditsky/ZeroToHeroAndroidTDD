@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import org.junit.Assert.assertEquals
 import ru.easycode.zerotoheroandroidtdd.Order
 
-interface FakeItemTextWrapper : ItemTextLiveDataWrapper.Mutable {
+interface FakeItemTextLiveDataWrapper : ItemTextLiveDataWrapper.Mutable {
 
     fun checkUpdateCalled(expected: String)
 
@@ -15,7 +15,7 @@ interface FakeItemTextWrapper : ItemTextLiveDataWrapper.Mutable {
 
     class Base(
         private val order: Order
-    ) : FakeItemTextWrapper {
+    ) : FakeItemTextLiveDataWrapper {
 
         private var actual = ""
 

@@ -12,8 +12,8 @@ import ru.easycode.zerotoheroandroidtdd.Order
 import ru.easycode.zerotoheroandroidtdd.core.model.Item
 import ru.easycode.zerotoheroandroidtdd.core.model.ItemUi
 import ru.easycode.zerotoheroandroidtdd.core.navigation.PopScreen
-import ru.easycode.zerotoheroandroidtdd.delete.FakeItemTextWrapper.Companion.LIVEDATA_ADD
-import ru.easycode.zerotoheroandroidtdd.delete.FakeItemTextWrapper.Companion.LIVEDATA_VALUE
+import ru.easycode.zerotoheroandroidtdd.delete.FakeItemTextLiveDataWrapper.Companion.LIVEDATA_ADD
+import ru.easycode.zerotoheroandroidtdd.delete.FakeItemTextLiveDataWrapper.Companion.LIVEDATA_VALUE
 import ru.easycode.zerotoheroandroidtdd.delete.FakeRepositoryDelete.Companion.REPOSITORY_DELETE
 import ru.easycode.zerotoheroandroidtdd.delete.FakeRepositoryDelete.Companion.REPOSITORY_ITEM
 
@@ -21,7 +21,7 @@ class DeleteViewModelTest {
 
     private val order = Order()
     private val itemListLiveDataWrapper = FakeItemListLiveDataWrapper.Base(order)
-    private val itemTextLiveDataWrapper = FakeItemTextWrapper.Base(order)
+    private val itemTextLiveDataWrapper = FakeItemTextLiveDataWrapper.Base(order)
     private val repository = FakeRepositoryDelete.Base(order)
     private val clear = FakeClearViewModel.Base(order)
     private val navigation = FakeNavigation.Base(order)

@@ -7,7 +7,7 @@ import ru.easycode.zerotoheroandroidtdd.core.ClearViewModel
 interface FakeClearViewModel : ClearViewModel {
 
     companion object {
-        const val CLEAR_VIEWMODEL = "clearCall"
+        const val CLEAR_VIEWMODEL = "clear#clearViewModel"
     }
 
     fun checkClearCalled(expected: Class<out ViewModel>)
