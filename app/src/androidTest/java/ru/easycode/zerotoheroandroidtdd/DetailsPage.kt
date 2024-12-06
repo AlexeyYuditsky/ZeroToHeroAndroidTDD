@@ -1,6 +1,7 @@
 package ru.easycode.zerotoheroandroidtdd
 
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.clearText
@@ -11,7 +12,6 @@ import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withParent
 import androidx.test.espresso.matcher.ViewMatchers.withText
-import com.google.android.material.textfield.TextInputEditText
 import org.hamcrest.Matchers.allOf
 
 class DetailsPage : AbstractPage(R.id.detailsLayout) {
@@ -20,8 +20,8 @@ class DetailsPage : AbstractPage(R.id.detailsLayout) {
         allOf(
             withParent(isAssignableFrom(rootClass)),
             withParent(withId(root)),
-            isAssignableFrom(TextInputEditText::class.java),
-            withId(R.id.itemInputEditText)
+            isAssignableFrom(EditText::class.java),
+            withId(R.id.itemEditText)
         )
     )
 

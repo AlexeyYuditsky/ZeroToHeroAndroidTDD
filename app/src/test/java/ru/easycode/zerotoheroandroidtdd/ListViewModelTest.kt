@@ -2,19 +2,26 @@ package ru.easycode.zerotoheroandroidtdd
 
 import kotlinx.coroutines.Dispatchers
 import org.junit.Test
+import ru.easycode.zerotoheroandroidtdd.core.Repository
+import ru.easycode.zerotoheroandroidtdd.core.model.Item
+import ru.easycode.zerotoheroandroidtdd.core.model.ItemUi
+import ru.easycode.zerotoheroandroidtdd.list.ListViewModel
 
-class MainViewModelTest {
+class ListViewModelTest {
+
+    private val order = Order()
+    private val repository = FakeRepository.Base()
+    private val liveDataWrapper = FakeListLiveDataWrapper.Base()
+    private val viewModel = ListViewModel(
+        repository = repository,
+        itemListLiveDataWrapper = liveDataWrapper,
+        dispatcherIO = Dispatchers.Unconfined,
+        dispatcherMain = Dispatchers.Unconfined,
+        navigation = FakeNavigation.Base(order = order)
+    )
 
     @Test
     fun test() {
-        val repository = FakeRepository.Base()
-        val liveDataWrapper = FakeListLiveDataWrapper.Base()
-        val viewModel = MainViewModel(
-            repository = repository, liveDataWrapper = liveDataWrapper,
-            dispatcher = Dispatchers.Unconfined,
-            dispatcherMain = Dispatchers.Unconfined
-        )
-
         repository.expectList(listOf(Item(id = 0L, text = "1"), Item(id = 1L, text = "2")))
 
         viewModel.init()
@@ -43,5 +50,7 @@ private interface FakeRepository : Repository.Read {
         override fun list(): List<Item> {
             return list
         }
+
     }
+
 }

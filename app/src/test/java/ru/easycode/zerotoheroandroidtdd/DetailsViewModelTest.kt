@@ -1,47 +1,43 @@
 package ru.easycode.zerotoheroandroidtdd
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.LiveData
 import kotlinx.coroutines.Dispatchers
 import org.junit.Assert.assertEquals
-import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import ru.easycode.zerotoheroandroidtdd.FakeClearViewModel.Companion.CLEAR
 import ru.easycode.zerotoheroandroidtdd.FakeListLiveDataWrapper.Companion.LIVE_DATA_DELETE
 import ru.easycode.zerotoheroandroidtdd.FakeListLiveDataWrapper.Companion.LIVE_DATA_UPDATE
 import ru.easycode.zerotoheroandroidtdd.FakeRepositoryChange.Companion.REPOSITORY_DELETE
 import ru.easycode.zerotoheroandroidtdd.FakeRepositoryChange.Companion.REPOSITORY_UPDATE
+import ru.easycode.zerotoheroandroidtdd.core.Repository
+import ru.easycode.zerotoheroandroidtdd.core.model.Item
+import ru.easycode.zerotoheroandroidtdd.core.model.ItemUi
+import ru.easycode.zerotoheroandroidtdd.details.DetailsViewModel
+import ru.easycode.zerotoheroandroidtdd.details.ItemTextLiveDataWrapper
 
 class DetailsViewModelTest {
 
-    @get:Rule
-    val rule = InstantTaskExecutorRule()
-
-    private lateinit var order: Order
-    private lateinit var liveDataWrapper: FakeListLiveDataWrapper
-    private lateinit var repository: FakeRepositoryChange
-    private lateinit var clear: FakeClearViewModel
-    private lateinit var viewModel: DetailsViewModel
-
-    @Before
-    fun setup() {
-        order = Order()
-        liveDataWrapper = FakeListLiveDataWrapper.Base(order)
-        repository = FakeRepositoryChange.Base(order)
-        clear = FakeClearViewModel.Base(order)
-        viewModel = DetailsViewModel(
-            changeLiveDataWrapper = liveDataWrapper,
-            repository = repository,
-            clear = clear,
-            dispatcher = Dispatchers.Unconfined,
-            dispatcherMain = Dispatchers.Unconfined
-        )
-    }
+    private val order = Order()
+    private val repository = FakeRepositoryChange.Base(order)
+    private val liveDataWrapper = FakeListLiveDataWrapper.Base(order)
+    private val clear = FakeClearViewModel.Base(order)
+    private val navigation = FakeNavigation.Base(order)
+    private val itemTextLiveDataWrapper = FakeItemTextLiveDataWrapper.Base(order)
+    private val viewModel = DetailsViewModel(
+        repository = repository,
+        itemListLiveDataWrapper = liveDataWrapper,
+        clear = clear,
+        dispatcherIO = Dispatchers.Unconfined,
+        dispatcherMain = Dispatchers.Unconfined,
+        navigation = navigation,
+        itemTextLiveDataWrapper = itemTextLiveDataWrapper
+    )
 
     @Test
     fun test_init() {
         viewModel.init(itemId = 5L)
-        assertEquals("5", viewModel.liveData.value)
+
+        itemTextLiveDataWrapper.checkLiveDataValue("5")
     }
 
     @Test
@@ -61,7 +57,7 @@ class DetailsViewModelTest {
         liveDataWrapper.update(listOf(ItemUi(id = 8L, text = "8"), ItemUi(id = 9L, text = "any")))
         viewModel.init(itemId = 8L)
 
-        viewModel.update(itemId = 8L, newText = "newText")
+        viewModel.update(id = 8L, newText = "newText")
         repository.checkUpdateCalled(8L, "newText")
         liveDataWrapper.checkUpdateCallList(
             listOf(
@@ -120,4 +116,38 @@ private interface FakeRepositoryChange : Repository.Change {
             order.add(REPOSITORY_UPDATE)
         }
     }
+}
+
+private interface FakeItemTextLiveDataWrapper : ItemTextLiveDataWrapper.Mutable {
+
+    fun checkLiveDataValue(expected: String)
+
+    companion object {
+        const val LIVEDATA_VALUE = "itemTextLiveDataWrapper#liveDataValue"
+        const val LIVEDATA_UPDATE = "itemTextLiveDataWrapper#update"
+    }
+
+    class Base(
+        private val order: Order
+    ) : FakeItemTextLiveDataWrapper {
+
+        private lateinit var value: String
+
+        override fun update(value: String) {
+            order.add(LIVEDATA_UPDATE)
+            this.value = value
+        }
+
+        override fun liveData(): LiveData<String> = throw IllegalArgumentException("not used")
+
+        override fun liveDataValue(): String {
+            order.add(LIVEDATA_VALUE)
+            return value
+        }
+
+        override fun checkLiveDataValue(expected: String) {
+            assertEquals(expected, value)
+        }
+    }
+
 }

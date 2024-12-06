@@ -2,8 +2,10 @@ package ru.easycode.zerotoheroandroidtdd
 
 import androidx.lifecycle.LiveData
 import org.junit.Assert.assertEquals
+import ru.easycode.zerotoheroandroidtdd.core.ItemListLiveDataWrapper
+import ru.easycode.zerotoheroandroidtdd.core.model.ItemUi
 
-interface FakeListLiveDataWrapper : ListLiveDataWrapper.All {
+interface FakeListLiveDataWrapper : ItemListLiveDataWrapper.All {
 
     companion object {
         const val LIVE_DATA_DELETE = "ListLiveDataWrapper#delete"
@@ -12,7 +14,9 @@ interface FakeListLiveDataWrapper : ListLiveDataWrapper.All {
 
     fun checkUpdateCallList(expected: List<ItemUi>)
 
-    class Base(private val order: Order = Order()) : FakeListLiveDataWrapper {
+    class Base(
+        private val order: Order
+    ) : FakeListLiveDataWrapper {
 
         private val actual = mutableListOf<ItemUi>()
 
@@ -20,16 +24,16 @@ interface FakeListLiveDataWrapper : ListLiveDataWrapper.All {
             assertEquals(expected, actual)
         }
 
-        override fun update(item: ItemUi) {
+        override fun update(value: ItemUi) {
             order.add(LIVE_DATA_UPDATE)
-            actual.find { it.areItemsSame(item) }?.let {
-                actual[actual.indexOf(it)] = item
+            actual.find { it.areItemsSame(value) }?.let {
+                actual[actual.indexOf(it)] = value
             }
         }
 
-        override fun update(list: List<ItemUi>) {
+        override fun update(value: List<ItemUi>) {
             actual.clear()
-            actual.addAll(list)
+            actual.addAll(value)
         }
 
         override fun liveData(): LiveData<List<ItemUi>> {
@@ -40,9 +44,9 @@ interface FakeListLiveDataWrapper : ListLiveDataWrapper.All {
             actual.add(value)
         }
 
-        override fun delete(item: ItemUi) {
+        override fun delete(value: ItemUi) {
             order.add(LIVE_DATA_DELETE)
-            actual.remove(item)
+            actual.remove(value)
         }
     }
 }
