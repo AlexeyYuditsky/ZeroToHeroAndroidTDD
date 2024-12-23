@@ -1,8 +1,6 @@
 package ru.easycode.zerotoheroandroidtdd.core
 
 import org.junit.Assert.assertEquals
-import ru.easycode.zerotoheroandroidtdd.main.Navigation
-import ru.easycode.zerotoheroandroidtdd.main.Screen
 
 interface FakeNavigation : Navigation.Mutable {
 
@@ -16,17 +14,21 @@ interface FakeNavigation : Navigation.Mutable {
         const val NAVIGATE = "Navigation#navigate"
     }
 
-    class Base(private val order: Order) : Mutable {
+    class Base(
+        private val order: Order
+    ) : Mutable {
 
         private lateinit var actual: Screen
 
-        override fun update(screen: Screen) {
-            actual = screen
+        override fun update(value: Screen) {
+            actual = value
             order.add(NAVIGATE)
         }
 
         override fun checkScreen(expected: Screen) {
             assertEquals(expected, actual)
         }
+
     }
+
 }

@@ -14,7 +14,7 @@ import ru.easycode.zerotoheroandroidtdd.folder.list.FolderListLiveDataWrapper
 import ru.easycode.zerotoheroandroidtdd.folder.list.FolderUi
 import ru.easycode.zerotoheroandroidtdd.folder.list.FoldersListScreen
 
-class CreateFolderViewModelTest {
+class CreateFoldersListViewModelTest {
 
     private lateinit var order: Order
     private lateinit var liveDataWrapper: FakeAddLiveDataWrapper

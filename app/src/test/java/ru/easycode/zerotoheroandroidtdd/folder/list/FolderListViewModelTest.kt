@@ -6,8 +6,10 @@ import org.junit.Before
 import org.junit.Test
 import ru.easycode.zerotoheroandroidtdd.core.FakeNavigation
 import ru.easycode.zerotoheroandroidtdd.core.FakeNavigation.Companion.NAVIGATE
+import ru.easycode.zerotoheroandroidtdd.core.Folder
+import ru.easycode.zerotoheroandroidtdd.core.FolderUi
 import ru.easycode.zerotoheroandroidtdd.core.Order
-import ru.easycode.zerotoheroandroidtdd.folder.core.Folder
+import ru.easycode.zerotoheroandroidtdd.folder.FoldersListViewModel
 import ru.easycode.zerotoheroandroidtdd.folder.core.FolderLiveDataWrapper
 import ru.easycode.zerotoheroandroidtdd.folder.core.FoldersRepository
 import ru.easycode.zerotoheroandroidtdd.folder.create.CreateFolderScreen
@@ -22,7 +24,7 @@ class FolderListViewModelTest {
     private lateinit var repository: FakeRepository
     private lateinit var folderLiveDataWrapper: FakeFolderUpdateLiveDataWrapper
     private lateinit var liveDataWrapper: FakeLiveDataWrapper
-    private lateinit var viewModel: FolderListViewModel
+    private lateinit var viewModel: FoldersListViewModel
 
     @Before
     fun setup() {
@@ -31,12 +33,12 @@ class FolderListViewModelTest {
         liveDataWrapper = FakeLiveDataWrapper.Base(order)
         folderLiveDataWrapper = FakeFolderUpdateLiveDataWrapper.Base(order)
         navigation = FakeNavigation.Base(order)
-        viewModel = FolderListViewModel(
+        viewModel = FoldersListViewModel(
             repository = repository,
             listLiveDataWrapper = liveDataWrapper,
             folderLiveDataWrapper = folderLiveDataWrapper,
             navigation = navigation,
-            dispatcher = Dispatchers.Unconfined,
+            dispatcherIO = Dispatchers.Unconfined,
             dispatcherMain = Dispatchers.Unconfined
         )
     }

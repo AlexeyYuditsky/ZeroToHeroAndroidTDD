@@ -15,7 +15,7 @@ import ru.easycode.zerotoheroandroidtdd.folder.details.FolderDetailsScreen
 import ru.easycode.zerotoheroandroidtdd.folder.details.FolderDetailsViewModel
 import ru.easycode.zerotoheroandroidtdd.folder.list.FoldersListScreen
 
-class EditFolderViewModelTest {
+class EditFoldersListViewModelTest {
 
     private lateinit var order: Order
     private lateinit var folderLiveDataWrapper: FakeRenameFolderLiveDataWrapper
